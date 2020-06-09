@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <utmp.h>
 #include <stdlib.h>
+#include <time.h>
 
 void output(struct utmp* utmp_struct);
 
@@ -21,13 +22,19 @@ int main(){
 	
 	return 0;
 }
-
+ 
 void output(struct utmp* utmp_struct){
+	if(utmp_struct->ut_type != USER_PROCESS){
+		return;
+	}
+	
+	long time = (long)utmp_struct->ut_time;
+
 	printf("%-8.8s", utmp_struct->ut_name);
 	printf(" ");
 	printf("%-8.8s", utmp_struct->ut_line);
 	printf(" ");
-	printf("%10ld", utmp_struct->ut_time);
+	printf("%12.12s  ", (ctime(&time) + 4));
 	printf(" ");
 	printf("(%s)\n", utmp_struct->ut_host);
 }
