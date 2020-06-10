@@ -28,7 +28,7 @@ int main(int count, char* argv[]){
 	if(count == 1){
 		do_more(stdin);
 	}else{
-		while(count--){
+		while(--count){
 			if((fp = fopen(*(++argv), "r")) != NULL){	
 				do_more(fp);
 				if(fclose(fp) == EOF){
