@@ -26,10 +26,10 @@ int main(int argc, char* argv[]){
 }
 
 void show_info(char* dir_name){
-	printf("x");
 	DIR* dir_ptr;
 	struct dirent* direntp;
 	char *fullpath = (char*)malloc(strlen(dir_name) + 1 + MAXNAMLEN + 1);
+	
 	if((dir_ptr = opendir(dir_name)) == NULL){
 		fprintf(stderr, "ls:cannot open %s\n", dir_name);
 	}else{
@@ -80,21 +80,43 @@ void mode2letters(int mode, char str[]){
 		str[1] = 'r';
 	if(mode & S_IWUSR)
 		str[2] = 'w';
-	if(mode & S_IXUSR)
+	
+	if(mode & S_ISUID){
+		if(mode & S_IXUSR)
+			str[3] = 's';
+		else
+			str[3] = 'S';
+	}else if(mode & S_IXUSR){
 		str[3] = 'x';
+	}
+	
 	if(mode & S_IRGRP)
 		str[4] = 'r';
 	if(mode & S_IWGRP)
 		str[5] = 'w';
-	if(mode & S_IXGRP)
+	
+	if(mode & S_ISGID){
+		if(mode & S_IXGRP)
+			str[6] = 's';
+		else
+			str[6] = 'S';
+	}else if(mode & S_IXGRP){
 		str[6] = 'x';
+	}
+	
 	if(mode & S_IROTH)
 		str[7] = 'r';
 	if(mode & S_IWOTH)
 		str[8] = 'w';
-	if(mode & S_IXOTH)
+	
+	if(mode & S_ISVTX){
+		if(mode & S_IXOTH)
+			str[9] = 't';
+		else
+			str[9] = 'T';
+	}else if(mode & S_IXOTH){
 		str[9] = 'x';
-
+	}
 }
 
 char* uid2name(uid_t uid){
