@@ -3,6 +3,7 @@
 #include <sys/stat.h>
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #define BUFSIZE 256
 
@@ -10,7 +11,13 @@ void print_path(ino_t cur_inode);
 ino_t get_inode(char* pathname);
 
 int main(){
-	print_path(get_inode("."));
+	ino_t cur_inode = get_inode(".");
+	
+	if(get_inode("..") == cur_inode){
+		printf("/");
+	}else{
+		print_path(get_inode("."));
+	}
 	printf("\n");
 
 	return 0;
