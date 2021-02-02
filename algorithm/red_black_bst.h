@@ -4,37 +4,51 @@
 #define RED true
 #define BLACK false
 
+template<class T>
 class Node{
 public:
-    int key;
+    T key;
     int val;
     int num;
     Node *left, *right;
     bool color;
 
-    Node(int key, int val, int num, bool color);
+    Node(T key, int val, int num, bool color);
 
     ~Node();
-
-    bool isRed();
 
     Node *leftRotate();
 
     Node *rightRotate();
 
-    int size();
-
     void reverseColor();
 };
 
+template<class T>
 class RedBlackBST{
 private:
-    Node *root;
+    Node<T> *root;
 
-    static Node *putKeyVal(Node *node, int key, int val);
+    Node<T> *putKeyVal(Node<T> *node, int key, int val);
+
+    Node<T> *deleteKey(Node<T> *node, int key);
+
+    Node<T> *deleteMin(Node<T> *node, int key);
+
+    bool isEmpty();
+
+    static bool isRed(Node<T> *node);
+
+    int size(Node<T> *node);
 
 public:
+    RedBlackBST();
+
+    ~RedBlackBST();
+
     void putKeyVal(int key, int val);
 
     void deleteKey(int key);
+
+    void deleteMin(int key);
 };
