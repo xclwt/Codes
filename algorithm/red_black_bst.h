@@ -52,3 +52,5 @@ public:
 
     void deleteMin(int key);
 };
+
+#endif

@@ -52,7 +52,7 @@ void Node<T>::reverseColor(){
 
 template<class T>
 RedBlackBST<T>::RedBlackBST(){
-
+    this->root = nullptr;
 }
 
 template<class T>
